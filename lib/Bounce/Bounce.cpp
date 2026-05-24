@@ -1,0 +1,83 @@
+#include "Bounce.h"
+
+Bounce::Bounce()
+{
+    this->interval_millis = 10;
+}
+Bounce::Bounce(__uint8_t pin, unsigned long interval_millis)
+{
+    interval(interval_millis);
+    previous_millis = millis();
+    state = digitalRead(pin);
+    this->pin = pin;
+}
+void Bounce::attach(int pin)
+{
+    previous_millis = millis();
+    state = digitalRead(pin);
+    this->pin = pin;
+}
+
+void Bounce::begin()
+{
+    pinMode(pin, INPUT);
+}
+void Bounce::write(int new_state)
+{
+    this->state = new_state;
+    digitalWrite(pin, state);
+}
+void Bounce::interval(unsigned long interval_millis)
+{
+    this->interval_millis = interval_millis;
+    this->rebounce_millis = 0;
+}
+void Bounce::rebounce(unsigned long interval)
+{
+    this->rebounce_millis = interval;
+}
+bool Bounce::update()
+{
+    if (debounce())
+    {
+        rebounce(0);
+        return stateChanged = 1;
+    }
+    if (rebounce_millis && (millis() - previous_millis >= rebounce_millis))
+    {
+        previous_millis = millis();
+        rebounce(0);
+        return stateChanged = 1;
+    }
+    return stateChanged = 0;
+}
+unsigned long Bounce::duration()
+{
+    return millis() - previous_millis;
+}
+int16_t Bounce::read()
+{
+    return (int)state;
+}
+uint16_t Bounce::debounce()
+{
+    uint8_t new_state = digitalRead(pin);
+    if (state != new_state)
+    {
+        if (millis() - previous_millis >= interval_millis)
+        {
+            previous_millis = millis();
+            state = new_state;
+            return 1;
+        }
+    }
+    return 0;
+}
+bool Bounce::risingEdge()
+{
+    return stateChanged && state;
+}
+bool Bounce::fallingEdge()
+{
+    return stateChanged && !state;
+}
