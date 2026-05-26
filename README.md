@@ -6,3 +6,10 @@ Here i upload the Analog LED clock based on STM32F103C8T6 through PlatformIO fra
 3. On home page select open project and select the unzipped project folder
 4. And press th build icon on your VSCode and upload that sketch to your microcontroller.
 Thanks for following the instruction steps. May Allah SWT bless all of us, brothers & sisters
+# Hardware
+1. STM32F103C8T6 or BluePill board
+2. DS3231 RTC Module
+3. WS2812 LED Strip
+4. Wires
+5. CR2032
+
