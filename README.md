@@ -13,4 +13,11 @@ Thanks for following the instruction steps. May Allah SWT bless all of us, broth
 4. Wires
 5. CR2032
 6. 5V Power supply
+# Connection
+1. I2C connection (DS3231)
+   SDA->PB11
+   SCL->PB10
+   VCC->5V
+   GND->GND
+   
 
